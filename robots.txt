@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Situs portfolio publik — semua halaman boleh diindeks.
+# Tidak ada area admin atau file sensitif di situs ini.

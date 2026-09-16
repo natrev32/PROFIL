@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>paulgg — Studio</title>
+<meta name="description" content="I make something with my own ideas and experiments — clean, quick, and comfortable on any screen." />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src https: data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #0d1526;
+    --paper-deep: #111b30;
+    --ink: #e9edf6;
+    --muted: #8d97ae;
+    --line: #223050;
+    --accent: #d98a63;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: #d98a6344; }
+
+  a { color: inherit; }
+
+  /* ---------- Header ---------- */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13, 21, 38, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1060px; margin: 0 auto; padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: padding 0.3s ease;
+  }
+  .navbar.slim .nav-inner { padding-top: 11px; padding-bottom: 11px; }
+  .logo {
+    font-family: var(--serif); font-size: 1.2rem; font-weight: 600;
+    letter-spacing: -0.01em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.82rem;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-toggle {
+    display: none; background: none; border: none; color: var(--ink);
+    font-size: 1.4rem; cursor: pointer; line-height: 1;
+  }
+
+  /* ---------- Layout ---------- */
+  section { padding: 110px 28px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+
+  .eyebrow {
+    display: flex; align-items: baseline; gap: 14px;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 42px;
+  }
+  .eyebrow .num { font-family: var(--serif); font-style: italic; color: var(--accent); }
+  .eyebrow::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+    transform: translateY(-4px);
+  }
+
+  h2 {
+    font-family: var(--serif); font-weight: 500; font-size: 1.9rem;
+    letter-spacing: -0.01em; margin: -22px 0 42px;
+  }
+
+  /* ---------- Nav CTA ---------- */
+  .nav-cta {
+    display: inline-block; padding: 10px 22px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.09em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--ink); border: 1px solid var(--line); border-radius: 999px;
+    transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .nav-cta:active { transform: scale(0.96); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding-top: 140px; padding-bottom: 90px;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.25fr 1fr; gap: 72px; align-items: center;
+  }
+
+  /* Status badge — dot berdenyut + teks kecil */
+  .status {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 18px; margin-bottom: 30px;
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .status:hover { border-color: var(--accent); color: var(--ink); }
+  .status .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #6fd08c;
+    animation: pulse 2.4s ease-out infinite;
+  }
+
+  .hero h1 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+    line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    color: var(--muted); max-width: 480px; font-size: 1.05rem;
+    margin-bottom: 42px;
+  }
+
+  .btn {
+    display: inline-block; padding: 14px 32px;
+    text-decoration: none; font-size: 0.88rem; font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn-solid {
+    background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink);
+  }
+  .btn-solid:hover { background: transparent; color: var(--ink); }
+  .btn-ghost {
+    border: 1px solid var(--line); color: var(--ink); margin-left: 12px;
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  .hero-socials {
+    display: flex; gap: 26px; margin-top: 48px;
+    font-size: 0.82rem; letter-spacing: 0.09em; text-transform: uppercase;
+  }
+  .hero-socials a {
+    color: var(--muted); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hero-socials a:hover { color: var(--ink); border-color: var(--ink); }
+
+  .hero-visual { display: flex; justify-content: center; }
+  .portrait {
+    width: 300px; max-width: 100%; padding: 10px;
+    background: #fff; border: 1px solid var(--line);
+    box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.55);
+    transform: rotate(1.5deg);
+  }
+  .portrait img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+    background: var(--paper-deep); filter: saturate(0.9);
+  }
+  .portrait figcaption {
+    font-family: var(--serif); font-style: italic; font-size: 0.88rem;
+    color: var(--muted); text-align: center; padding: 12px 0 4px;
+  }
+
+  /* ---------- Services ---------- */
+  .services { border-top: 1px solid var(--line); }
+  .service-list { border-top: 1px solid var(--line); }
+  .service {
+    display: grid; grid-template-columns: 56px 1fr 1.4fr; gap: 24px;
+    align-items: baseline;
+    padding: 34px 12px; border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+  .service:hover { background: var(--paper-deep); }
+  .service .idx {
+    font-family: var(--serif); font-style: italic; color: var(--accent);
+    font-size: 0.95rem;
+  }
+  .service h3 {
+    font-family: var(--serif); font-weight: 500; font-size: 1.3rem;
+    letter-spacing: -0.01em;
+  }
+  .service p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ---------- Projects ---------- */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-auto-rows: 1fr; gap: 1px;
+    background: var(--line); border: 1px solid var(--line);
+  }
+  .project { background: var(--paper); padding: 38px 32px 32px; display: flex; flex-direction: column; }
+  .project-year {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 22px;
+  }
+  .project-year.soon {
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .project-year.soon::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .project h3 {
+    font-family: var(--serif); font-weight: 500; font-size: 1.45rem;
+    letter-spacing: -0.01em; margin-bottom: 12px;
+  }
+  .project p { color: var(--muted); font-size: 0.94rem; margin-bottom: 26px; flex: 1; }
+  .project-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--line); padding-top: 16px;
+  }
+  .project-meta .stack { color: var(--muted); font-size: 0.82rem; }
+  .project-link {
+    font-size: 0.82rem; letter-spacing: 0.09em; text-transform: uppercase;
+    text-decoration: none; color: var(--accent);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, letter-spacing 0.25s;
+  }
+  .project-link:hover, .project-link:active {
+    border-color: var(--accent); letter-spacing: 0.13em;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact { text-align: center; padding: 140px 28px 120px; }
+  .contact .big {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(1.9rem, 4.5vw, 3rem); letter-spacing: -0.015em;
+    line-height: 1.2; max-width: 640px; margin: 0 auto 24px;
+  }
+  .contact .big em { font-style: italic; color: var(--accent); }
+  .contact p { color: var(--muted); max-width: 480px; margin: 0 auto 44px; }
+  .mail {
+    font-family: var(--serif); font-size: clamp(1.25rem, 3vw, 1.7rem);
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--line); padding: 0 2px 6px;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .mail:hover, .mail:active { color: var(--accent); border-color: var(--accent); }
+
+  .contact-socials {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 14px;
+    margin-top: 52px;
+  }
+  .contact-socials a {
+    display: inline-flex; align-items: center;
+    min-height: 46px; padding: 0 26px;
+    font-size: 0.82rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid var(--line); border-radius: 999px;
+    transition: color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .contact-socials a:hover { color: var(--ink); border-color: var(--ink); }
+  .contact-socials a:active { transform: scale(0.96); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line); padding: 28px;
+    display: flex; justify-content: space-between;
+    color: var(--muted); font-size: 0.85rem;
+  }
+
+  /* ---------- Reveal ---------- */
+  .reveal {
+    opacity: 0; transform: translateY(18px);
+    filter: blur(6px);
+    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; filter: blur(0); }
+
+  /* ---------- Intro curtain ---------- */
+  /* Tirai pembuka: layer gelap naik perlahan saat halaman selesai dimuat */
+  .curtain {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .curtain.lifted { transform: translateY(-100%); }
+  .curtain .mark {
+    font-family: var(--serif); font-style: italic; font-size: 1.5rem;
+    color: var(--accent); letter-spacing: 0.02em;
+    animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .curtain.lifted .mark { transition: opacity 0.3s ease; opacity: 0; }
+
+  /* Hero menunggu tirai terbuka dulu */
+  .hero h1, .hero-desc, .hero .btn, .hero-socials, .hero-visual {
+    animation-play-state: paused;
+  }
+  body.opened .hero h1, body.opened .hero-desc, body.opened .hero .btn,
+  body.opened .hero-socials, body.opened .hero-visual {
+    animation-play-state: running;
+  }
+
+  /* ---------- Atmosphere ---------- */
+  /* Film grain — texture halus agar background tidak flat */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 1;
+    pointer-events: none; opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+
+  /* Ambient light — dua cahaya lembut di hero, seperti lampu ruang kerja */
+  .hero { position: relative; overflow: hidden; }
+  .hero::before, .hero::after {
+    content: ""; position: absolute; border-radius: 50%;
+    filter: blur(90px); pointer-events: none; z-index: 0;
+  }
+  .hero::before {
+    width: 480px; height: 480px; top: -12%; right: -6%;
+    background: rgba(217, 138, 99, 0.07);
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .hero::after {
+    width: 420px; height: 420px; bottom: -16%; left: -8%;
+    background: rgba(77, 120, 204, 0.08);
+    animation: drift 18s ease-in-out infinite alternate-reverse;
+  }
+  .hero .container { position: relative; z-index: 2; }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(40px, 30px) scale(1.12); }
+  }
+
+  /* Spotlight kartu — lingkaran cahaya mengikuti kursor (di-set lewat JS) */
+  .project { position: relative; overflow: hidden; }
+  .project::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(217, 138, 99, 0.09), transparent 65%);
+    opacity: 0; transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .project:hover::before { opacity: 1; }
+
+  /* Scrollbar kustom — sinkron dengan tema */
+  ::-webkit-scrollbar { width: 11px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line); border-radius: 99px;
+    border: 3px solid var(--paper);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  html { scrollbar-color: var(--line) var(--paper); scrollbar-width: thin; }
+
+  /* Focus ring — terlihat saat navigasi dengan keyboard */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px;
+  }
+
+  /* Back to top */
+  .to-top {
+    position: fixed; right: 26px; bottom: 26px; z-index: 99;
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--paper-deep); border: 1px solid var(--line);
+    color: var(--muted); font-size: 1rem; cursor: pointer;
+    opacity: 0; transform: translateY(14px); pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease,
+                color 0.2s, border-color 0.2s;
+  }
+  .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+  .to-top:hover { color: var(--accent); border-color: var(--accent); }
+  .to-top:active { transform: scale(0.92); }
+
+  /* ---------- Touch ---------- */
+  a, button { -webkit-tap-highlight-color: rgba(217, 138, 99, 0.18); }
+
+  /* Comfortable tap targets */
+  .hero-socials a { padding: 8px 0 6px; }
+  .project-link { padding: 8px 0 6px; }
+  .nav-links a { padding: 6px 0; }
+  .logo { padding: 6px 0; }
+
+  /* Press feedback — felt on tap, not just hover */
+  .btn:active { transform: scale(0.97); }
+  .project-link:active, .hero-socials a:active, .nav-links a:active, .mail:active { opacity: 0.55; }
+
+  /* On touch devices, hover-only effects are replaced by press states */
+  @media (hover: none) {
+    .btn:hover { transform: none; }
+    .project:hover { transform: none; background: var(--paper); }
+    .portrait { transform: rotate(1.5deg); }
+  }
+
+  /* ---------- Motion ---------- */
+  /* Reading progress hairline */
+  .progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0;
+    background: var(--accent); z-index: 101;
+  }
+
+  /* Hero entrance — one choreographed sequence on load */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+  }
+  .hero h1, .hero-desc, .hero .btn, .hero-socials, .hero-visual, .status {
+    animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .status { animation-delay: 0s; }
+  .hero h1 { animation-delay: 0.12s; }
+  .hero-desc { animation-delay: 0.26s; }
+  .hero .btn { animation-delay: 0.38s; }
+  .hero-visual { animation-delay: 0.3s; }
+  .hero-socials { animation-delay: 0.5s; }
+
+  /* Nav links — underline draws in from the left */
+  .nav-links a { position: relative; }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -5px;
+    width: 100%; height: 1px; background: var(--ink);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* Section eyebrow — the rule line draws itself when scrolled into view */
+  .eyebrow::after {
+    transform: translateY(-4px) scaleX(0); transform-origin: left;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+  }
+  .eyebrow.visible::after { transform: translateY(-4px) scaleX(1); }
+
+  /* Buttons breathe a little on hover */
+  .btn:hover { transform: translateY(-2px); }
+
+  /* Project cards lift on hover */
+  .project {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s ease;
+  }
+  .project:hover { transform: translateY(-5px); background: var(--paper-deep); }
+
+  /* "Soon" dot — a slow, soft pulse */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(217, 138, 99, 0.35); }
+    70% { box-shadow: 0 0 0 8px rgba(217, 138, 99, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(217, 138, 99, 0); }
+  }
+  .project-year.soon::before { animation: pulse 2.4s ease-out infinite; }
+
+  /* Portrait follows the cursor with a slight tilt */
+  .hero-visual { perspective: 900px; }
+  .portrait {
+    transform: rotate(1.5deg) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.35s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+    .hero h1, .hero-desc, .hero .btn, .hero-socials, .hero-visual, .status,
+    .project-year.soon::before, .status .dot, .hero::before, .hero::after { animation: none; }
+    .hero h1, .hero-desc, .hero .btn, .hero-socials { opacity: 1; }
+    .btn:hover, .project:hover { transform: none; }
+    .portrait { transform: rotate(1.5deg); }
+    .to-top { transition: none; }
+    .curtain { display: none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px) {
+    section { padding: 80px 22px; }
+    .hero { padding-top: 110px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+    .hero-visual { order: -1; }
+    .portrait { width: 230px; }
+    .service { grid-template-columns: 40px 1fr; }
+    .service p { grid-column: 2; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+    .nav-toggle { display: block; }
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 15px 28px; }
+    .nav-links li.nav-cta-item a {
+      display: inline-block; margin: 14px 28px 16px; padding: 12px 26px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="curtain" id="curtain" aria-hidden="true"><span class="mark">paulgg</span></div>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<!-- ===== Header ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">paulgg — Studio</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <p class="status"><span class="dot" aria-hidden="Incorrect"></span> Currently available for work</p>
+      <h1>I make something with<br /><em>my own ideas and experiments</em><br /></h1>
+      <p class="hero-desc">
+        Focused on interfaces and experiences — clean markup, quick loads,
+        and layouts that hold up on any screen. Working remotely from Indonesia.
+      </p>
+      <a href="mailto:paulgg023@gmail.com" class="btn btn-solid">Book a Call</a>
+      <a href="#work" class="btn btn-ghost">Selected Work</a>
+      <div class="hero-socials">
+        <a href="https://www.instagram.com/anfadf_/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+        <!-- Ganti href dengan link invite Discord server kamu -->
+        <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener" aria-label="Discord server">Discord</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <figure class="portrait">
+        <!-- Ganti src dengan foto kamu -->
+        <img src="https://i.pinimg.com/736x/61/73/6b/61736bf465816b1f0f7d5363fb9fcaf4.jpg" alt="Portrait" />
+        <figcaption>— usually at a desk, somewhere quiet</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Services ===== -->
+<section class="services" id="services">
+  <div class="container">
+    <p class="eyebrow reveal"><span class="num">01</span> What I do</p>
+    <div class="service-list">
+      <div class="service reveal">
+        <span class="idx">i.</span>
+        <h3>Freelance builder</h3>
+        <p>I work independently — taking ideas from a rough sketch in my notes to something real and running.</p>
+      </div>
+      <div class="service reveal">
+        <span class="idx">ii.</span>
+        <h3>Idea-driven projects</h3>
+        <p>My head is full of things I want to build. This site is where those ideas slowly turn into working products.</p>
+      </div>
+      <div class="service reveal">
+        <span class="idx">iii.</span>
+        <h3>Learning by building</h3>
+        <p>Every project is a reason to learn something new — a tool, a stack, a way of solving a problem.</p>
+      </div>
+      <div class="service reveal">
+        <span class="idx">iv.</span>
+        <h3>Open to collaboration</h3>
+        <p>Got an idea of your own? I'm always up for joining forces and building something together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Projects ===== -->
+<section id="work">
+  <div class="container">
+    <p class="eyebrow reveal"><span class="num">02</span> Selected work</p>
+    <div class="projects-grid">
+      <article class="project reveal">
+        <p class="project-year soon">Soon</p>
+        <h3>PRICE LIST ITEMS</h3>
+        <p>SOON</p>
+        <div class="project-meta">
+          <span class="stack">-</span>
+          <!-- Ganti href dengan link project kamu -->
+          <a href="#" target="_blank" rel="noopener" class="project-link">View</a>
+        </div>
+      </article>
+      <article class="project reveal">
+        <p class="project-year soon">Soon</p>
+        <h3>FINANCE TRACK</h3>
+        <p>SOON</p>
+        <div class="project-meta">
+          <span class="stack">-</span>
+          <!-- Ganti href dengan link project kamu -->
+          <a href="#" target="_blank" rel="noopener" class="project-link">View</a>
+        </div>
+      </article>
+      <article class="project reveal">
+        <p class="project-year soon">Soon</p>
+        <h3>BOT DISCORD</h3>
+        <p>SOON</p>
+        <div class="project-meta">
+          <span class="stack">-</span>
+          <!-- Ganti href dengan link project kamu -->
+          <a href="#" target="_blank" rel="noopener" class="project-link">View</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <p class="big reveal">Have something in mind?<br />Let's <em>talk about it.</em></p>
+    <p class="reveal">
+      My inbox is always open — whether it's a project, a question,
+      or just a hello. I'll get back to you as soon as I can.
+    </p>
+    <a href="mailto:paulgg023@gmail.com" class="mail reveal">paulgg023@gmail.com</a>
+    <div class="contact-socials reveal">
+      <a href="https://www.instagram.com/anfadf_/" target="_blank" rel="noopener">Instagram</a>
+      <!-- Ganti href dengan link invite Discord server kamu -->
+      <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener">Discord</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 paulgg — All rights reserved</span>
+  <span>Built by hand, no template</span>
+</footer>
+
+<script>
+  /* ---- Anti-copy deterrents (menghalau peniru biasa, bukan pengaman absolut) ---- */
+  // Blokir klik kanan
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  // Blokir pintasan devtools / view-source / save
+  document.addEventListener('keydown', e => {
+    const k = e.key.toUpperCase();
+    const blocked =
+      e.key === 'F12' ||
+      ((e.ctrlKey || e.metaKey) && (k === 'U' || k === 'S' || k === 'P')) ||
+      ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'I' || k === 'J' || k === 'C'));
+    if (blocked) e.preventDefault();
+  });
+  // Foto tidak bisa di-drag atau di-save lewat drag
+  document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.addEventListener('dragstart', e => e.preventDefault());
+  });
+  // Peringatan hak cipta di console
+  console.log('%c© 2026 paulgg — All rights reserved.', 'color:#d98a63;font-size:14px;font-weight:bold');
+  console.log('%cKonten dan desain dilindungi. Menyalin tanpa izin dilarang.', 'color:#8d97ae;font-size:12px');
+</script>
+
+<script>
+  // Mobile menu
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => links.classList.remove('open'))
+  );
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Intro curtain — buka tirai saat halaman siap, lalu mulai koreografi hero
+  const curtain = document.getElementById('curtain');
+  if (curtain) {
+    const open = () => {
+      curtain.classList.add('lifted');
+      document.body.classList.add('opened');
+      setTimeout(() => curtain.remove(), 1100);
+    };
+    if (document.readyState === 'complete') setTimeout(open, 450);
+    else addEventListener('load', () => setTimeout(open, 450));
+  } else {
+    document.body.classList.add('opened');
+  }
+
+  // Parallax lembut — foto hero bergeser pelan mengikuti scroll
+  const portrait = document.querySelector('.portrait');
+  if (!reduceMotion && portrait) {
+    addEventListener('scroll', () => {
+      const y = Math.min(scrollY, 800);
+      portrait.style.translate = '0 ' + (y * 0.06) + 'px';
+    }, { passive: true });
+  }
+
+  // Quiet scroll-in — cards inside a group cascade in one after another
+  document.querySelectorAll('.projects-grid, .service-list').forEach(group => {
+    group.querySelectorAll('.reveal').forEach((el, i) => {
+      if (!reduceMotion) el.style.transitionDelay = (i * 0.12) + 's';
+    });
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Reading progress hairline + back-to-top visibility
+  const progress = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+  addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+    toTop.classList.toggle('show', scrollY > 600);
+  }, { passive: true });
+  toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Spotlight kartu project mengikuti kursor
+  if (matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.project').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  }
+
+  // Navbar menyusut rapi setelah mulai scroll
+  const navbar = document.querySelector('.navbar');
+  addEventListener('scroll', () => {
+    navbar.classList.toggle('slim', scrollY > 80);
+  }, { passive: true });
+
+  // Portrait tilts gently toward the cursor
+  if (!reduceMotion && matchMedia('(pointer: fine)').matches) {
+    const stage = document.querySelector('.hero-visual');
+    const portrait = document.querySelector('.portrait');
+    stage.addEventListener('mousemove', e => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      portrait.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg');
+      portrait.style.setProperty('--rx', (-y * 7).toFixed(2) + 'deg');
+    });
+    stage.addEventListener('mouseleave', () => {
+      portrait.style.setProperty('--ry', '0deg');
+      portrait.style.setProperty('--rx', '0deg');
+    });
+  }
+</script>
+</body>
+</html>
